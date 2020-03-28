@@ -15,6 +15,10 @@ RSpec.describe Api::Controllers::Institutions::Index, type: :action do
     )
   end
 
+  it 'initializes without dependencies' do
+    described_class.new
+  end
+
   it 'fetchs the list of institutions' do
     expect(interactor).to receive(:call).and_return(interactor_result)
 

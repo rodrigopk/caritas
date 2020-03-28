@@ -9,7 +9,9 @@ module Api
         expose :institutions
 
         def initialize(dependencies = {})
-          @interactor = dependencies.fetch(:interactor)
+          @interactor = dependencies.fetch(:interactor) do
+            Containers::Institutions[:list_interactor]
+          end
         end
 
         def call(_params)

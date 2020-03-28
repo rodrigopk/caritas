@@ -15,7 +15,10 @@ module Api
 
       routes 'config/routes'
 
-      layout :applicat
+      default_request_format :json
+      default_response_format :json
+
+      layout :application
 
       templates 'templates'
 
@@ -58,6 +61,7 @@ module Api
       view.prepare do
         include Hanami::Helpers
         include Api::Assets::Helpers
+        include Api::Views::AcceptJson
       end
     end
     configure :development do

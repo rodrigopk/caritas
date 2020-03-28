@@ -6,7 +6,7 @@ module Interactors
       include Interactor
 
       before do
-        inject_dependencies(context.dependencies)
+        inject_dependencies(context.dependencies || {})
       end
 
       def inject_dependencies(dependencies)
