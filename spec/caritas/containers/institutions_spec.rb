@@ -8,4 +8,8 @@ RSpec.describe Containers::Institutions do
   it 'registers the employee_token_generator service' do
     expect(container[:repository]).to be_instance_of(InstitutionRepository)
   end
+
+  it 'registers the interactor to fetch the list of institutions' do
+    expect(container[:list_interactor]).to eq(Interactors::Institutions::List)
+  end
 end
