@@ -1,0 +1,3 @@
+project=caritas
+test=rspec
+template=erb
