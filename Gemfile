@@ -8,6 +8,8 @@ gem 'rake'
 
 gem 'pg'
 
+gem 'interactor', '~> 3.0'
+
 group :development do
   # Code reloading
   # See: https://guides.hanamirb.org/projects/code-reloading
