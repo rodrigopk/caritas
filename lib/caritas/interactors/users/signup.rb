@@ -10,36 +10,25 @@ module Interactors
       expose :user
 
       def initialize(dependencies = {})
-        @user_repository = dependencies.fetch(:repository) do
-          Containers::Users[:repository]
-        end
-
-        @password_service = dependencies.fetch(:password_service) do
-          Containers::Services[:password]
+        @create_user_interactor = dependencies.fetch(:create_user_interactor) do
+          Containers::Users[:create_interactor]
         end
       end
 
       def call(user_attributes)
         @user = create_user(user_attributes)
-      rescue Hanami::Model::UniqueConstraintViolationError
-        error!(Errors.user_email_already_exists)
-      rescue StandardError => e
-        error!(e.message)
       end
 
       private
 
       def create_user(user_attributes)
-        @user_repository.create(
-          email: user_attributes[:email],
-          password_digest: hashed_password(user_attributes[:password]),
-          first_name: user_attributes[:first_name],
-          last_name: user_attributes[:last_name]
-        )
-      end
+        result = @create_user_interactor.call(user_attributes)
 
-      def hashed_password(password)
-        hashed_password = @password_service.encrypt(password)
+        if result.success?
+          result.user
+        else
+          error!(result.errors)
+        end
       end
     end
   end
