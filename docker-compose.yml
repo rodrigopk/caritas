@@ -3,10 +3,11 @@ version: '3'
 services:
   web:
     build: .
-    command: hanami server --host=0.0.0.0
+    command: bundle exec puma -C config/puma.rb -p "${PORT}"
     ports:
       - 2300:2300
     volumes:
       - $PWD:/app
     environment:
       - DATABASE_URL=postgres://postgres:postgres@docker.for.mac.host.internal:5432/caritas_development
+      - PORT=2300

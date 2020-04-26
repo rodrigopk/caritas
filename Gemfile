@@ -5,6 +5,7 @@ source 'https://rubygems.org'
 gem 'hanami', '~> 1.3'
 gem 'hanami-model', '~> 1.3'
 gem 'rake'
+gem 'puma'
 
 gem 'pg'
 
@@ -26,8 +27,4 @@ end
 group :test do
   gem 'capybara'
   gem 'rspec'
-end
-
-group :production do
-  # gem 'puma'
 end
