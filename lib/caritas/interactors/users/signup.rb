@@ -11,7 +11,7 @@ module Interactors
 
       def initialize(dependencies = {})
         @user_repository = dependencies.fetch(:repository) do
-          Containers::Institutions[:repository]
+          Containers::Users[:repository]
         end
 
         @password_service = dependencies.fetch(:password_service) do
