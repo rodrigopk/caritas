@@ -58,6 +58,23 @@ RSpec.describe Interactors::Users::Signup, type: :interactor do
       expect(result.user).to equal(user)
     end
 
+    describe 'given there is an user with the given email' do
+      let(:error) { Hanami::Model::UniqueConstraintViolationError }
+
+      before do
+        allow(user_repository).to receive(:create).and_raise(error)
+      end
+
+      it 'fails' do
+        expect(result.success?).to be_falsy
+      end
+
+      it 'adds the error message to the interactor errors' do
+        expect(result.errors)
+          .to eq([Interactors::Errors.user_email_already_exists])
+      end
+    end
+
     describe 'given there is an error while creating the user' do
       let(:db_error) { StandardError.new('db_error') }
 

@@ -5,7 +5,7 @@ require_relative '../middleware/logger'
 module Api
   module Controllers
     module Logger
-      FILTERED_PARAMS = ['password', 'access_token', 'refresh_token'].freeze
+      FILTERED_PARAMS = %w[password access_token refresh_token].freeze
 
       def self.included(action)
         action.class_eval do

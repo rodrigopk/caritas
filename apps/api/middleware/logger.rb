@@ -21,7 +21,7 @@ module Middleware
 
         @logger.info "Parameters: #{env['REQUEST_METHOD']} \
                       #{env['PATH_INFO']} #{params}"
-      rescue => e
+      rescue StandardError => e
         @logger.error e.message
         @logger.error e.backtrace.join("\n")
       end

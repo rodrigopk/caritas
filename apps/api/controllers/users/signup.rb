@@ -43,8 +43,13 @@ module Api
           if result.success?
             @user = result.user
           else
-            halt 400, JSON.generate(errors: { signup: result.errors })
+            halt error_status_for_interactor_error(result.errors[0]),
+                 JSON.generate(errors: { signup: result.errors })
           end
+        end
+
+        def error_status_for_interactor_error(error)
+          error == Interactors::Errors.user_email_already_exists ? 409 : 400
         end
       end
     end

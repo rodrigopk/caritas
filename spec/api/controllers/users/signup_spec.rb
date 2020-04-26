@@ -15,8 +15,8 @@ RSpec.describe Api::Controllers::Users::Signup, type: :action do
     it 'includes the parameter errors in the json response' do
       expect(response[2]).to eq([{
         errors: {
-          user: ['is missing'],
-        },
+          user: ['is missing']
+        }
       }.to_json])
     end
   end
@@ -28,7 +28,7 @@ RSpec.describe Api::Controllers::Users::Signup, type: :action do
           email: 'penelope@cruz.com',
           password: 'superSecretPassword',
           first_name: 'Penelope',
-          last_name: 'Cruz',
+          last_name: 'Cruz'
         }
       }
     end
@@ -67,12 +67,34 @@ RSpec.describe Api::Controllers::Users::Signup, type: :action do
         end
       end
 
+      describe 'given an user for the given email exists' do
+        let(:interactor_result) do
+          double(
+            'Interactor::Result',
+            success?: false,
+            errors: [Interactors::Errors.user_email_already_exists]
+          )
+        end
+
+        it 'returns 409 status' do
+          expect(response[0]).to eq 409
+        end
+
+        it 'includes the interactor errors in the json response' do
+          expect(response[2]).to eq([{
+            errors: {
+              signup: [Interactors::Errors.user_email_already_exists]
+            }
+          }.to_json])
+        end
+      end
+
       describe 'given the interactor fails' do
         let(:interactor_result) do
           double(
             'Interactor::Result',
             success?: false,
-            errors: ['interactorError'],
+            errors: ['interactorError']
           )
         end
 
@@ -83,8 +105,8 @@ RSpec.describe Api::Controllers::Users::Signup, type: :action do
         it 'includes the interactor errors in the json response' do
           expect(response[2]).to eq([{
             errors: {
-              signup: ['interactorError'],
-            },
+              signup: ['interactorError']
+            }
           }.to_json])
         end
       end

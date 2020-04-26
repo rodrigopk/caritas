@@ -21,7 +21,9 @@ module Interactors
 
       def call(user_attributes)
         @user = create_user(user_attributes)
-      rescue => e
+      rescue Hanami::Model::UniqueConstraintViolationError
+        error!(Errors.user_email_already_exists)
+      rescue StandardError => e
         error!(e.message)
       end
 

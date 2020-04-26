@@ -7,7 +7,7 @@ RSpec.describe Api::Views::Users::Signup, type: :view do
       first_name: 'Penelope',
       last_name: 'Cruz',
       email: 'penelope@cruz.com',
-      password_hash: 'secret',
+      password_hash: 'secret'
     )
   end
 
@@ -21,8 +21,8 @@ RSpec.describe Api::Views::Users::Signup, type: :view do
         id: 'user_id',
         first_name: 'Penelope',
         last_name: 'Cruz',
-        email: 'penelope@cruz.com',
-      },
+        email: 'penelope@cruz.com'
+      }
     }.to_json
 
     expect(view.render).to eq(serialized)
