@@ -38,7 +38,7 @@ module Api
         private
 
         def handle_user_signup(user_attributes)
-          result = @interactor.call(user_attributes: user_attributes)
+          result = @interactor.call(user_attributes)
 
           if result.success?
             @user = result.user

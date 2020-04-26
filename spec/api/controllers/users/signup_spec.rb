@@ -95,7 +95,7 @@ RSpec.describe Api::Controllers::Users::Signup, type: :action do
 
   def handle_signup
     receive(:call)
-      .with(user_attributes: params[:user])
+      .with(params[:user])
       .and_return(interactor_result)
   end
 end
