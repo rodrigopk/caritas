@@ -31,6 +31,7 @@ RSpec.describe Interactors::Users::Signup, type: :interactor do
     end
     let(:user) { instance_double(User) }
     let(:hashed_password) { 'encrypted_password' }
+    let(:result) { interactor.call(user_attributes) }
 
     before do
       allow(password_service).to encrypt_password
@@ -54,9 +55,23 @@ RSpec.describe Interactors::Users::Signup, type: :interactor do
     end
 
     it 'exposes the retrieved institutions' do
-      context = interactor.call(user_attributes)
+      expect(result.user).to equal(user)
+    end
 
-      expect(context.user).to equal(user)
+    describe 'given there is an error while creating the user' do
+      let(:db_error) { StandardError.new('db_error') }
+
+      before do
+        allow(user_repository).to receive(:create).and_raise(db_error)
+      end
+
+      it 'fails' do
+        expect(result.success?).to be_falsy
+      end
+
+      it 'adds the error message to the interactor errors' do
+        expect(result.errors).to eq([db_error.message])
+      end
     end
   end
 
