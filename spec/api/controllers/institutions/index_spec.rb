@@ -3,13 +3,13 @@
 RSpec.describe Api::Controllers::Institutions::Index, type: :action do
   let(:action) { described_class.new(interactor: interactor) }
 
-  let(:interactor) { class_double(Interactors::Institutions::List) }
+  let(:interactor) { instance_double(Interactors::Institutions::List) }
   let(:params) { Hash[] }
 
   let(:institutions) { [double(Institution)] }
   let(:interactor_result) do
     double(
-      Interactor::Context,
+      Hanami::Interactor::Result,
       success?: true,
       institutions: institutions
     )
@@ -35,7 +35,7 @@ RSpec.describe Api::Controllers::Institutions::Index, type: :action do
 
   describe 'given the interactor fails' do
     let(:interactor_result) do
-      double(Interactor::Context, success?: false)
+      double(Hanami::Interactor::Result, success?: false)
     end
 
     it 'returns not found status' do

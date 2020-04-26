@@ -9,7 +9,7 @@ module Containers
     end
 
     register :list_interactor do
-      Interactors::Institutions::List
+      Interactors::Institutions::List.new
     end
   end
 end

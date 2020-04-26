@@ -3,32 +3,32 @@
 require 'spec_helper'
 
 RSpec.describe Interactors::Institutions::List, type: :interactor do
-  let(:interactor) { described_class }
-
-  let(:institutions_repository) { instance_double(InstitutionRepository) }
-  let(:params) do
-    { dependencies: { repository: institutions_repository } }
+  it 'initializes without dependencies' do
+    described_class.new
   end
 
   describe 'call' do
+    let(:interactor) { described_class.new(dependencies) }
     let(:institutions) { [double(Institution)] }
+    let(:institutions_repository) { instance_double(InstitutionRepository) }
+    let(:dependencies) { { repository: institutions_repository } }
 
     before do
       allow(institutions_repository).to fetch_institutions
     end
 
     it 'calls' do
-      interactor.call(params)
+      interactor.call
     end
 
     it 'fetchs all institutions' do
       expect(institutions_repository).to fetch_institutions
 
-      interactor.call(params)
+      interactor.call
     end
 
     it 'exposes the retrieved institutions' do
-      context = interactor.call(params)
+      context = interactor.call
 
       expect(context.institutions).to equal(institutions)
     end

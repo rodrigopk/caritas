@@ -10,6 +10,7 @@ RSpec.describe Containers::Institutions do
   end
 
   it 'registers the interactor to fetch the list of institutions' do
-    expect(container[:list_interactor]).to eq(Interactors::Institutions::List)
+    expect(container[:list_interactor])
+      .to be_instance_of(Interactors::Institutions::List)
   end
 end

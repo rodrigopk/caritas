@@ -1,22 +1,22 @@
 # frozen_string_literal: true
 
+require 'hanami/interactor'
+
 module Interactors
   module Institutions
     class List
-      include Interactor
+      include Hanami::Interactor
 
-      before do
-        inject_dependencies(context.dependencies || {})
-      end
+      expose :institutions
 
-      def inject_dependencies(dependencies)
+      def initialize(dependencies = {})
         @institutions_repository = dependencies.fetch(:repository) do
           Containers::Institutions[:repository]
         end
       end
 
       def call
-        context.institutions = @institutions_repository.all
+        @institutions = @institutions_repository.all
       end
     end
   end
