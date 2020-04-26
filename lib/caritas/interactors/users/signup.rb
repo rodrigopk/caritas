@@ -9,24 +9,7 @@ module Interactors
 
       expose :user
 
-      def initialize(user_attributes:, dependencies: {})
-        @user_attributes = user_attributes
-
-        inject_dependencies(dependencies)
-      end
-
-      def call
-        @user = @user_repository.create(
-          email: @user_attributes[:email],
-          password_digest: hashed_password,
-          first_name: @user_attributes[:first_name],
-          last_name: @user_attributes[:last_name]
-        )
-      end
-
-      private
-
-      def inject_dependencies(dependencies)
+      def initialize(dependencies = {})
         @user_repository = dependencies.fetch(:repository) do
           Containers::Institutions[:repository]
         end
@@ -36,8 +19,19 @@ module Interactors
         end
       end
 
-      def hashed_password
-        hashed_password = @password_service.encrypt(@user_attributes[:password])
+      def call(user_attributes)
+        @user = @user_repository.create(
+          email: user_attributes[:email],
+          password_digest: hashed_password(user_attributes[:password]),
+          first_name: user_attributes[:first_name],
+          last_name: user_attributes[:last_name]
+        )
+      end
+
+      private
+
+      def hashed_password(password)
+        hashed_password = @password_service.encrypt(password)
       end
     end
   end

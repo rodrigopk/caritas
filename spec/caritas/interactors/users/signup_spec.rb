@@ -13,15 +13,12 @@ RSpec.describe Interactors::Users::Signup, type: :interactor do
   end
 
   it 'initializes without dependencies' do
-    described_class.new(user_attributes: user_attributes)
+    described_class.new
   end
 
   describe 'call' do
     let(:interactor) do
-      described_class.new(
-        user_attributes: user_attributes,
-        dependencies: dependencies
-      )
+      described_class.new(dependencies)
     end
 
     let(:user_repository) { instance_double(UserRepository) }
@@ -41,23 +38,23 @@ RSpec.describe Interactors::Users::Signup, type: :interactor do
     end
 
     it 'calls' do
-      interactor.call
+      interactor.call(user_attributes)
     end
 
     it 'encrypts the given password' do
       expect(password_service).to encrypt_password
 
-      interactor.call
+      interactor.call(user_attributes)
     end
 
     it 'fetchs all institutions' do
       expect(user_repository).to create_user
 
-      interactor.call
+      interactor.call(user_attributes)
     end
 
     it 'exposes the retrieved institutions' do
-      context = interactor.call
+      context = interactor.call(user_attributes)
 
       expect(context.user).to equal(user)
     end
