@@ -8,7 +8,7 @@ Hanami::Model.migration do
                   null: false,
                   default: Hanami::Model::Sql.function(:uuid_generate_v4)
 
-      column :email, String, null: false
+      column :email, String, null: false, unique: true
       column :password_digest, String, null: false
       column :first_name, String, null: false
       column :last_name, String, null: false
