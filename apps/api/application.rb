@@ -2,6 +2,7 @@
 
 require 'hanami/helpers'
 require 'hanami/assets'
+require_relative 'controllers/logger'
 
 module Api
   class Application < Hanami::Application
@@ -56,6 +57,7 @@ module Api
       )
 
       controller.prepare do
+        include Api::Controllers::Logger
       end
 
       view.prepare do
