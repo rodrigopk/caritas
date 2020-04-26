@@ -11,7 +11,7 @@ Hanami::Model.migration do
       column :email, String, null: false, unique: true
       column :password_digest, String, null: false
       column :first_name, String, null: false
-      column :last_name, String, null: false
+      column :last_name, String
 
       column :created_at, DateTime, null: false
       column :updated_at, DateTime, null: false
