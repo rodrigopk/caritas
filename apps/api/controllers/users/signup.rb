@@ -1,5 +1,16 @@
 # frozen_string_literal: true
 
+class SignupParams < Hanami::Action::Params
+  validations do
+    required(:user).schema do
+      required(:first_name).filled(:str?)
+      optional(:last_name).filled(:str?)
+      required(:email).filled(:str?, format?: /@/)
+      required(:password).filled(:str?)
+    end
+  end
+end
+
 module Api
   module Controllers
     module Users
@@ -8,14 +19,7 @@ module Api
 
         expose :user
 
-        params do
-          required(:user).schema do
-            required(:first_name).filled(:str?)
-            optional(:last_name).filled(:str?)
-            required(:email).filled(:str?, format?: /@/)
-            required(:password).filled(:str?)
-          end
-        end
+        params SignupParams
 
         def initialize(dependencies = {})
           @interactor = dependencies.fetch(:interactor) do
@@ -25,15 +29,21 @@ module Api
 
         def call(params)
           if params.valid?
-            result = @interactor.call(user_attributes: params[:user])
-
-            if result.success?
-              @user = result.user
-            else
-              halt 400, JSON.generate(errors: { signup: result.errors })
-            end
+            handle_user_signup(params[:user])
           else
             halt 422, JSON.generate(errors: params.errors)
+          end
+        end
+
+        private
+
+        def handle_user_signup(user_attributes)
+          result = @interactor.call(user_attributes: user_attributes)
+
+          if result.success?
+            @user = result.user
+          else
+            halt 400, JSON.generate(errors: { signup: result.errors })
           end
         end
       end
