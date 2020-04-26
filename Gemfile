@@ -8,6 +8,9 @@ gem 'rake'
 
 gem 'pg'
 
+gem 'bcrypt'
+gem 'jwt'
+
 group :development do
   # Code reloading
   # See: https://guides.hanamirb.org/projects/code-reloading
