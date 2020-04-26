@@ -1,16 +1,5 @@
 # frozen_string_literal: true
 
-class SignupParams < Hanami::Action::Params
-  validations do
-    required(:user).schema do
-      required(:first_name).filled(:str?)
-      optional(:last_name).filled(:str?)
-      required(:email).filled(:str?, format?: /@/)
-      required(:password).filled(:str?)
-    end
-  end
-end
-
 module Api
   module Controllers
     module Users
@@ -19,7 +8,7 @@ module Api
 
         expose :user
 
-        params SignupParams
+        params Params::Users::Signup
 
         def initialize(dependencies = {})
           @interactor = dependencies.fetch(:interactor) do

@@ -10,6 +10,7 @@ module Api
       root __dir__
 
       load_paths << %w[
+        params
         controllers
         views
       ]
