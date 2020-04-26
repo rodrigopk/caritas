@@ -15,7 +15,7 @@ group :development do
   # Code reloading
   # See: https://guides.hanamirb.org/projects/code-reloading
   gem 'hanami-webconsole'
-  gem 'shotgun', platforms: :ruby
+  # gem 'shotgun', platforms: :ruby
 end
 
 group :test, :development do
