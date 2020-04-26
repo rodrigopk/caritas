@@ -2,8 +2,14 @@
 
 module Services
   class Password
-    def self.encrypt(password)
-      BCrypt::Password.create(password)
+    class << self
+      def encrypt(password)
+        BCrypt::Password.create(password)
+      end
+
+      def matches_encryptes_password?(password, hash)
+        password == BCrypt::Password.new(hash)
+      end
     end
   end
 end
