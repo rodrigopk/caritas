@@ -20,7 +20,7 @@ module Interactors
           email: @user_attributes[:email],
           password_digest: hashed_password,
           first_name: @user_attributes[:first_name],
-          last_name: @user_attributes[:last_name],
+          last_name: @user_attributes[:last_name]
         )
       end
 

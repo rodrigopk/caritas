@@ -8,7 +8,7 @@ RSpec.describe Interactors::Users::Signup, type: :interactor do
       email: 'penelope@cruz.com',
       password: 'superSecretPassword',
       first_name: 'Penelope',
-      last_name: 'Cruz',
+      last_name: 'Cruz'
     }
   end
 
@@ -20,7 +20,7 @@ RSpec.describe Interactors::Users::Signup, type: :interactor do
     let(:interactor) do
       described_class.new(
         user_attributes: user_attributes,
-        dependencies: dependencies,
+        dependencies: dependencies
       )
     end
 
@@ -29,7 +29,7 @@ RSpec.describe Interactors::Users::Signup, type: :interactor do
     let(:dependencies) do
       {
         repository: user_repository,
-        password_service: password_service,
+        password_service: password_service
       }
     end
     let(:user) { instance_double(User) }
@@ -77,7 +77,7 @@ RSpec.describe Interactors::Users::Signup, type: :interactor do
         email: user_attributes[:email],
         password_digest: hashed_password,
         first_name: user_attributes[:first_name],
-        last_name: user_attributes[:last_name],
+        last_name: user_attributes[:last_name]
       )
       .and_return(user)
   end

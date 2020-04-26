@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Hanami::Model.migration do
   change do
     create_table :users do
@@ -5,7 +7,6 @@ Hanami::Model.migration do
                   'uuid',
                   null: false,
                   default: Hanami::Model::Sql.function(:uuid_generate_v4)
-
 
       column :email, String, null: false
       column :password_digest, String, null: false
