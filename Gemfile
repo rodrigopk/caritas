@@ -17,6 +17,7 @@ group :development do
   # See: https://guides.hanamirb.org/projects/code-reloading
   gem 'hanami-webconsole'
   # gem 'shotgun', platforms: :ruby
+  gem 'guard-rspec', require: false
 end
 
 group :test, :development do
