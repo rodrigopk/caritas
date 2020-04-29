@@ -8,7 +8,7 @@ module Services
       end
 
       def matches_encryptes_password?(password, hash)
-        password == BCrypt::Password.new(hash)
+        BCrypt::Password.new(hash) == password
       end
     end
   end

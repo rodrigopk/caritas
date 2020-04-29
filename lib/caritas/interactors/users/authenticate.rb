@@ -21,7 +21,6 @@ module Interactors
 
       def call(email:, password:)
         user = find_user_by_email(email)
-
         if user
           validate_credentials(user, password)
         else
