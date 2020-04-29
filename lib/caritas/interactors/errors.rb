@@ -6,6 +6,10 @@ module Interactors
       def user_email_already_exists
         :user_email_already_exists
       end
+
+      def invalid_credentials
+        :invalid_credentials
+      end
     end
   end
 end

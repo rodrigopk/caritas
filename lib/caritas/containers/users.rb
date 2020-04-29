@@ -15,5 +15,9 @@ module Containers
     register :create_interactor do
       Interactors::Users::Create.new
     end
+
+    register :authenticate_interactor do
+      Interactors::Users::Authenticate.new
+    end
   end
 end
