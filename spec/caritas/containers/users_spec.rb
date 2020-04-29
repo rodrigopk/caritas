@@ -24,4 +24,9 @@ RSpec.describe Containers::Users do
     expect(container[:authenticate_interactor])
       .to be_instance_of(Interactors::Users::Authenticate)
   end
+
+  it 'registers the interactor to handle user signup' do
+    expect(container[:signin_interactor])
+      .to be_instance_of(Interactors::Users::Signin)
+  end
 end
