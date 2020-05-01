@@ -7,5 +7,9 @@ module Containers
     register :password do
       ::Services::Password
     end
+
+    register :jwt do
+      ::Services::Jwt
+    end
   end
 end

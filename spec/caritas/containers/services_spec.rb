@@ -8,4 +8,8 @@ RSpec.describe Containers::Services do
   it 'registers the password service' do
     expect(container[:password]).to eq(Services::Password)
   end
+
+  it 'registers the jwt service' do
+    expect(container[:jwt]).to eq(Services::Jwt)
+  end
 end
