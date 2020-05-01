@@ -3,6 +3,7 @@
 require 'hanami/helpers'
 require 'hanami/assets'
 require_relative 'controllers/logger'
+require_relative 'controllers/mixins/authentication/user'
 
 module Api
   class Application < Hanami::Application
@@ -16,6 +17,24 @@ module Api
       ]
 
       routes 'config/routes'
+
+      middleware.use Warden::Manager do |manager|
+        manager.default_strategies :jwt_authentication_token
+        manager.failure_app = lambda do |_env|
+          [
+            401,
+            {
+              'Access-Control-Allow-Origin'  =>
+                Settings::Cors::CORS_ALLOW_ORIGIN,
+              'Access-Control-Allow-Methods' =>
+                Settings::Cors::CORS_ALLOW_METHODS,
+              'Access-Control-Allow-Headers' =>
+                Settings::Cors::CORS_ALLOW_HEADERS,
+            },
+            ['Authentication failure'],
+          ]
+        end
+      end
 
       default_request_format :json
       default_response_format :json
@@ -59,6 +78,7 @@ module Api
 
       controller.prepare do
         include Api::Controllers::Logger
+        include Api::Controllers::Mixins::Authentication::User
       end
 
       view.prepare do
