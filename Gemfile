@@ -11,6 +11,7 @@ gem 'pg'
 
 gem 'bcrypt'
 gem 'jwt'
+gem 'warden'
 
 group :development do
   # Code reloading
