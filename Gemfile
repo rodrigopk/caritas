@@ -29,4 +29,5 @@ group :test do
   gem 'capybara'
   gem 'rspec'
   gem 'ffaker'
+  gem 'timecop'
 end

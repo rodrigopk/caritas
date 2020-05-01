@@ -207,6 +207,7 @@ GEM
     shellany (0.0.1)
     thor (1.0.1)
     tilt (2.0.10)
+    timecop (0.9.1)
     transproc (1.1.1)
     url_mount (0.2.1)
       rack
@@ -231,6 +232,7 @@ DEPENDENCIES
   puma
   rake
   rspec
+  timecop
 
 BUNDLED WITH
    1.16.0
