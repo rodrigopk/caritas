@@ -4,5 +4,5 @@ get '/hello', to: 'hello#index'
 
 get '/institutions', to: 'institutions#index'
 
-post '/users/signup', to: 'users#signup'
-post '/users/signin', to: 'users#signin'
+post '/oauth/expats/signup', to: 'oauth/expats#signup'
+post '/oauth/signin', to: 'oauth#signin'

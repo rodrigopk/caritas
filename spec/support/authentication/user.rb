@@ -11,7 +11,7 @@ module Spec
           base.before do
             if defined? action
               action.authenticator = authenticator(
-                user_id: 'b33dd9ed-9266-4ed5-a79c-3093f67822fa',
+                user_id: 'b33dd9ed-9266-4ed5-a79c-3093f67822fa'
               )
             end
           end

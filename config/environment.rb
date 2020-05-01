@@ -8,7 +8,7 @@ require 'hanami/middleware/body_parser'
 require_relative '../lib/caritas'
 require_relative '../apps/api/application'
 
-FILTERED_PARAMS = %w[password access_token]
+FILTERED_PARAMS = %w[password access_token].freeze
 
 Hanami.configure do
   mount Api::Application, at: '/api'

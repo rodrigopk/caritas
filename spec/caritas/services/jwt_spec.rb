@@ -9,7 +9,7 @@ RSpec.describe Services::Jwt, type: :service do
   let(:payload) do
     {
       user_id: user_id,
-      iss: jwt_issuer,
+      iss: jwt_issuer
     }
   end
 
@@ -34,7 +34,7 @@ RSpec.describe Services::Jwt, type: :service do
       expect(payload_decoded).to eq(
         'user_id' => user_id,
         'iss' => jwt_issuer,
-        'exp' => (timestamp + 3600).to_i,
+        'exp' => (timestamp + 3600).to_i
       )
     end
 

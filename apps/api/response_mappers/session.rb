@@ -3,17 +3,19 @@
 module Api
   module ResponseMappers
     class Session
-      def self.call(user:, access_token:)
+      def self.call(account:, expat:, access_token:)
         {
-          user: {
-            id: user.id,
-            first_name: user.first_name,
-            last_name: user.last_name,
-            email: user.email
+          account: {
+            id: account.id,
+            email: account.email
+          },
+          expat: {
+            first_name: expat.first_name,
+            last_name: expat.last_name
           },
           meta: {
-            access_token: access_token,
-          },
+            access_token: access_token
+          }
         }
       end
     end

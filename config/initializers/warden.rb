@@ -3,5 +3,5 @@
 # Registry warden strategy
 Warden::Strategies.add(
   :jwt_authentication_token,
-  Services::Warden::JwtTokenStrategy,
+  Services::Warden::JwtTokenStrategy
 )

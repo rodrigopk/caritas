@@ -18,7 +18,7 @@ module Services
 
       def raise_missing_key_error(key)
         raise ArgumentError,
-        "Missing secret jwt base #{key} for #{ENV['HANAMI_ENV']} \
+              "Missing secret jwt base #{key} for #{ENV['HANAMI_ENV']} \
         environment, set this value in .env file"
       end
 
