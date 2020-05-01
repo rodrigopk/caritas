@@ -2,6 +2,7 @@
 
 RSpec.describe AccountRepository, type: :repository do
   let(:repository) { described_class.new }
+  let(:expat_repository) { ExpatRepository.new }
 
   describe 'find_by_email' do
     it 'calls' do
@@ -24,6 +25,25 @@ RSpec.describe AccountRepository, type: :repository do
         result = repository.find_by_email(account.email)
 
         expect(result).to eq(account)
+
+        repository.delete(account.id)
+      end
+    end
+
+    describe 'given the account has an associated expat' do
+      it 'aggregates the associated expat' do
+        account = repository.create(
+          email: FFaker::Internet.email,
+          password_digest: 'secretPwdDigest',
+        )
+        expat = expat_repository.create(
+          account_id: account.id,
+          first_name: 'Penelope',
+          last_name: 'Cruz',
+        )
+        result = repository.find_by_email(account.email)
+
+        expect(result.expat).to eq(expat)
 
         repository.delete(account.id)
       end
