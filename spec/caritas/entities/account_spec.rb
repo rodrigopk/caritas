@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-RSpec.describe User, type: :entity do
+RSpec.describe Account, type: :entity do
   # place your tests here
 end
