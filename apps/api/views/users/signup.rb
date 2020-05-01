@@ -13,7 +13,10 @@ module Api
               first_name: user.first_name,
               last_name: user.last_name,
               email: user.email
-            }
+            },
+            meta: {
+              access_token: access_token,
+            },
           }
 
           raw json_response.to_json

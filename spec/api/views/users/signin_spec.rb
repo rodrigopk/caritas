@@ -26,7 +26,7 @@ RSpec.describe Api::Views::Users::Signin, type: :view do
       },
       meta: {
         access_token: 'access_token',
-      }
+      },
     }.to_json
 
     expect(view.render).to eq(serialized)

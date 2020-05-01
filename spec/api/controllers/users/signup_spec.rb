@@ -33,25 +33,22 @@ RSpec.describe Api::Controllers::Users::Signup, type: :unauthenticated_action do
       }
     end
 
-    let(:interactor_result) do
-      double('Interactor::Result', success?: true, user: user)
-    end
     let(:user) { double('User') }
+    let(:access_token) { 'access_token' }
 
     before(:each) do
       allow(interactor).to handle_signup
     end
 
     describe 'interactor' do
-      it 'calls the interactor' do
-        expect(interactor).to handle_signup
-
-        action.call(params)
-      end
-
       describe 'given the interactor is successful' do
         let(:interactor_result) do
-          double('Interactor::Result', success?: true, user: user)
+          double(
+            'Interactor::Result',
+            success?: true,
+            user: user,
+            access_token: access_token,
+          )
         end
 
         it 'returns 200 status' do
@@ -64,6 +61,12 @@ RSpec.describe Api::Controllers::Users::Signup, type: :unauthenticated_action do
           action.call(params)
 
           expect(action.exposures[:user]).to eq(user)
+        end
+
+        it 'adds the generated access token to the context' do
+          action.call(params)
+
+          expect(action.exposures[:access_token]).to eq(access_token)
         end
       end
 

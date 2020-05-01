@@ -16,7 +16,7 @@ module Api
             },
             meta: {
               access_token: access_token,
-            }
+            },
           }
 
           raw json_response.to_json

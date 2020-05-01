@@ -7,7 +7,7 @@ module Api
         include Api::Action
         include Mixins::Authentication::Skip
 
-        expose :user
+        expose :user, :access_token
 
         params Params::Users::Signup
 
@@ -32,6 +32,7 @@ module Api
 
           if result.success?
             @user = result.user
+            @access_token = result.access_token
           else
             halt error_status_for_interactor_error(result.errors[0]),
                  JSON.generate(errors: { signup: result.errors })
