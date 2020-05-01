@@ -22,7 +22,7 @@ RSpec.describe Interactors::Accounts::Signin, type: :interactor do
     let(:dependencies) do
       {
         authenticate_interactor: authenticate_interactor,
-        access_token_interactor: access_token_interactor,
+        access_token_interactor: access_token_interactor
       }
     end
     let(:account) { double('Account') }

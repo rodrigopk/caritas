@@ -6,7 +6,7 @@ RSpec.describe Interactors::Accounts::Create, type: :interactor do
   let(:account_attributes) do
     {
       email: 'penelope@cruz.com',
-      password: 'superSecretPassword',
+      password: 'superSecretPassword'
     }
   end
 
@@ -102,7 +102,7 @@ RSpec.describe Interactors::Accounts::Create, type: :interactor do
     receive(:create)
       .with(
         email: account_attributes[:email],
-        password_digest: hashed_password,
+        password_digest: hashed_password
       )
       .and_return(account)
   end

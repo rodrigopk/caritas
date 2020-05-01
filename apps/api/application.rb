@@ -24,14 +24,14 @@ module Api
           [
             401,
             {
-              'Access-Control-Allow-Origin'  =>
+              'Access-Control-Allow-Origin' =>
                 Settings::Cors::CORS_ALLOW_ORIGIN,
               'Access-Control-Allow-Methods' =>
                 Settings::Cors::CORS_ALLOW_METHODS,
               'Access-Control-Allow-Headers' =>
-                Settings::Cors::CORS_ALLOW_HEADERS,
+                Settings::Cors::CORS_ALLOW_HEADERS
             },
-            ['Authentication failure'],
+            ['Authentication failure']
           ]
         end
       end

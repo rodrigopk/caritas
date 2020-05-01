@@ -3,7 +3,6 @@
 module Interactors
   module Accounts
     class Create < Interactor
-
       expose :account
 
       def initialize(dependencies = {})
@@ -29,7 +28,7 @@ module Interactors
       def create_account(account_attributes)
         @account_repository.create(
           email: account_attributes[:email],
-          password_digest: hashed_password(account_attributes[:password]),
+          password_digest: hashed_password(account_attributes[:password])
         )
       end
 

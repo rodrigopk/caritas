@@ -3,7 +3,6 @@
 module Interactors
   module Expats
     class Create < Interactor
-
       expose :expat
 
       def initialize(dependencies = {})

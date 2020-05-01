@@ -3,7 +3,6 @@
 module Interactors
   module Session
     class GenerateAccessToken < Interactor
-
       expose :access_token
 
       JWT_ISSUER = ENV['JWT_ISSUER']

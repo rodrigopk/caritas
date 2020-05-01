@@ -12,7 +12,7 @@ RSpec.describe Api::Views::Oauth::Signin, type: :view do
     Expat.new(
       id: 'expat_id',
       first_name: 'Penelope',
-      last_name: 'Cruz',
+      last_name: 'Cruz'
     )
   end
   let(:access_token) { 'access_token' }

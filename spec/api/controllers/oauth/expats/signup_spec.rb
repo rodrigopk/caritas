@@ -50,7 +50,7 @@ RSpec.describe Api::Controllers::Oauth::Expats::Signup,
             success?: true,
             account: account,
             expat: expat,
-            access_token: access_token,
+            access_token: access_token
           )
         end
 

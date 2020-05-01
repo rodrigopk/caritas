@@ -11,11 +11,11 @@ module Api
           },
           expat: {
             first_name: expat.first_name,
-            last_name: expat.last_name,
+            last_name: expat.last_name
           },
           meta: {
-            access_token: access_token,
-          },
+            access_token: access_token
+          }
         }
       end
     end

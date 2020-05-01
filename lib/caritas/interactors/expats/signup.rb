@@ -3,7 +3,6 @@
 module Interactors
   module Expats
     class Signup < Interactor
-
       expose :account, :expat, :access_token
 
       def initialize(dependencies = {})
@@ -32,14 +31,14 @@ module Interactors
       def create_account(attributes)
         result = @create_account_interactor.call(
           email: attributes[:email],
-          password: attributes[:password],
+          password: attributes[:password]
         )
 
         on_successful_interactor_result(result) do |result|
           create_expat(
             account: result.account,
             first_name: attributes[:first_name],
-            last_name: attributes[:last_name],
+            last_name: attributes[:last_name]
           )
 
           @account = result.account
@@ -50,7 +49,7 @@ module Interactors
         result = @create_expat_interactor.call(
           account_id: account.id,
           first_name: first_name,
-          last_name: last_name,
+          last_name: last_name
         )
 
         on_successful_interactor_result(result) do |result|

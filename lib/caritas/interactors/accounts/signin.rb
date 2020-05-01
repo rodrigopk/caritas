@@ -3,7 +3,6 @@
 module Interactors
   module Accounts
     class Signin < Interactor
-
       expose :account, :access_token
 
       def initialize(dependencies = {})

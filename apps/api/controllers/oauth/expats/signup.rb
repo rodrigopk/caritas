@@ -37,13 +37,13 @@ module Api
               @access_token = result.access_token
             else
               halt error_status_for_interactor_error(result.errors[0]),
-              JSON.generate(errors: { signup: result.errors })
+                   JSON.generate(errors: { signup: result.errors })
             end
           end
 
           def error_status_for_interactor_error(error)
             error == Interactors::Errors
-                      .account_email_already_exists ? 409 : 400
+                     .account_email_already_exists ? 409 : 400
           end
         end
       end

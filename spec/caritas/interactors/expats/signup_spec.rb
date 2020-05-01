@@ -30,7 +30,7 @@ RSpec.describe Interactors::Expats::Signup, type: :interactor do
       {
         create_account_interactor: create_account_interactor,
         create_expat_interactor: create_expat_interactor,
-        access_token_interactor: access_token_interactor,
+        access_token_interactor: access_token_interactor
       }
     end
     let(:account) { double('Account', id: 'account_id') }
@@ -149,7 +149,7 @@ RSpec.describe Interactors::Expats::Signup, type: :interactor do
     receive(:call)
       .with(
         email: attributes[:email],
-        password: attributes[:password],
+        password: attributes[:password]
       )
       .and_return(create_account_result)
   end
@@ -159,7 +159,7 @@ RSpec.describe Interactors::Expats::Signup, type: :interactor do
       .with(
         account_id: account.id,
         first_name: attributes[:first_name],
-        last_name: attributes[:last_name],
+        last_name: attributes[:last_name]
       )
       .and_return(create_expat_result)
   end

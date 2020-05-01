@@ -26,7 +26,7 @@ RSpec.describe Api::Controllers::Oauth::Signin, type: :unauthenticated_action do
       {
         account: {
           email: 'penelope@cruz.com',
-          password: 'superSecretPassword',
+          password: 'superSecretPassword'
         }
       }
     end
@@ -46,7 +46,7 @@ RSpec.describe Api::Controllers::Oauth::Signin, type: :unauthenticated_action do
             'Interactor::Result',
             success?: true,
             account: account,
-            access_token: access_token,
+            access_token: access_token
           )
         end
 

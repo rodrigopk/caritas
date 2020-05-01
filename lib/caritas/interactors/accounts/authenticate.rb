@@ -5,7 +5,6 @@ require_relative '../interactor'
 module Interactors
   module Accounts
     class Authenticate < Interactor
-
       expose :account
 
       def initialize(dependencies = {})
@@ -31,7 +30,7 @@ module Interactors
 
       def find_account_by_email(email)
         @account_repository.find_by_email(email)
-      rescue => e
+      rescue StandardError => e
         error!(e.message)
       end
 

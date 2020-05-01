@@ -20,7 +20,7 @@ RSpec.describe AccountRepository, type: :repository do
       it 'returns the account' do
         account = repository.create(
           email: FFaker::Internet.email,
-          password_digest: 'secretPwdDigest',
+          password_digest: 'secretPwdDigest'
         )
         result = repository.find_by_email(account.email)
 
@@ -34,12 +34,12 @@ RSpec.describe AccountRepository, type: :repository do
       it 'aggregates the associated expat' do
         account = repository.create(
           email: FFaker::Internet.email,
-          password_digest: 'secretPwdDigest',
+          password_digest: 'secretPwdDigest'
         )
         expat = expat_repository.create(
           account_id: account.id,
           first_name: 'Penelope',
-          last_name: 'Cruz',
+          last_name: 'Cruz'
         )
         result = repository.find_by_email(account.email)
 
