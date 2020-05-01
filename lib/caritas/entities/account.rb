@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 
-class User < Hanami::Entity
+class Account < Hanami::Entity
 end

@@ -2,14 +2,18 @@
 
 Hanami::Model.migration do
   change do
-    create_table :users do
+    create_table :expats do
       primary_key :id,
                   'uuid',
                   null: false,
                   default: Hanami::Model::Sql.function(:uuid_generate_v4)
 
-      column :email, String, null: false, unique: true
-      column :password_digest, String, null: false
+      foreign_key :account_id,
+                  :accounts,
+                  type: 'uuid',
+                  null: false,
+                  on_delete: :cascade
+
       column :first_name, String, null: false
       column :last_name, String
 

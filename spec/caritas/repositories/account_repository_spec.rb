@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe UserRepository, type: :repository do
+RSpec.describe AccountRepository, type: :repository do
   let(:repository) { described_class.new }
 
   describe 'find_by_email' do
@@ -16,17 +16,16 @@ RSpec.describe UserRepository, type: :repository do
     end
 
     describe 'given there is an account for the given email' do
-      it 'returns the user' do
-        user = repository.create(
-          first_name: 'Penelope',
+      it 'returns the account' do
+        account = repository.create(
           email: FFaker::Internet.email,
           password_digest: 'secretPwdDigest',
         )
-        result = repository.find_by_email(user.email)
+        result = repository.find_by_email(account.email)
 
-        expect(result).to eq(user)
+        expect(result).to eq(account)
 
-        repository.delete(user.id)
+        repository.delete(account.id)
       end
     end
   end
