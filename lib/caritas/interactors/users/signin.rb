@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-require 'hanami/interactor'
-
 module Interactors
   module Users
-    class Signin
-      include Hanami::Interactor
+    class Signin < Interactor
 
       expose :user
 

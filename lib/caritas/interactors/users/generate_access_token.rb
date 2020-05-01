@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-require 'hanami/interactor'
-
 module Interactors
   module Users
-    class GenerateAccessToken
-      include Hanami::Interactor
+    class GenerateAccessToken < Interactor
 
       expose :access_token
 
