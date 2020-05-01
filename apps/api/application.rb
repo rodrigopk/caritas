@@ -13,6 +13,7 @@ module Api
       load_paths << %w[
         params
         controllers
+        response_mappers
         views
       ]
 
