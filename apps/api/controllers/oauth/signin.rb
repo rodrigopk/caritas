@@ -2,24 +2,24 @@
 
 module Api
   module Controllers
-    module Users
+    module Oauth
       class Signin
         include Api::Action
         include Mixins::Authentication::Skip
 
-        expose :user, :access_token
+        expose :account, :expat, :access_token
 
-        params Params::Users::Signin
+        params Params::Oauth::Signin
 
         def initialize(dependencies = {})
           @interactor = dependencies.fetch(:interactor) do
-            Containers::Users[:signin_interactor]
+            Containers::Accounts[:signin_interactor]
           end
         end
 
         def call(params)
           if params.valid?
-            handle_user_signin(params[:user])
+            handle_account_signin(params[:account])
           else
             halt 422, JSON.generate(errors: params.errors)
           end
@@ -27,11 +27,12 @@ module Api
 
         private
 
-        def handle_user_signin(user_attributes)
-          result = @interactor.call(user_attributes)
+        def handle_account_signin(account_attributes)
+          result = @interactor.call(account_attributes)
 
           if result.success?
-            @user = result.user
+            @account = result.account
+            @expat = result.account.expat
             @access_token = result.access_token
           else
             halt 401

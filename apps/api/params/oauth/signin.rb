@@ -2,10 +2,10 @@
 
 module Api
   module Params
-    module Users
+    module Oauth
       class Signin < Hanami::Action::Params
         validations do
-          required(:user).schema do
+          required(:account).schema do
             required(:email).filled(:str?, format?: /@/)
             required(:password).filled(:str?)
           end

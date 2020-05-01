@@ -2,13 +2,13 @@
 
 module Api
   module Views
-    module Users
-      class Signup
+    module Oauth
+      class Signin
         include Api::View
 
         def render
           json_response = ResponseMappers::Session.call(
-            user: user, access_token: access_token
+            account: account, expat: expat, access_token: access_token
           )
 
           raw json_response.to_json
