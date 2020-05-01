@@ -2,8 +2,8 @@
 
 require 'spec_helper'
 
-describe Interactors::Users::GenerateAccessToken do
-  let(:user) { double('User', id: 'user_id') }
+describe Interactors::Session::GenerateAccessToken do
+  let(:account) { double('Account', id: 'account_id') }
 
   it 'initializes without dependencies' do
     described_class.new
@@ -21,12 +21,12 @@ describe Interactors::Users::GenerateAccessToken do
     it 'uses jwt issuer to encode device_id into a token' do
       expect(jwt_service).to encode_device_id_into_token
 
-      interactor.call(user: user)
+      interactor.call(account: account)
     end
 
     it 'exposes the generated access token' do
       allow(jwt_service).to encode_device_id_into_token
-      result = interactor.call(user: user)
+      result = interactor.call(account: account)
 
       expect(result.access_token).to eq(access_token)
     end
@@ -36,7 +36,7 @@ describe Interactors::Users::GenerateAccessToken do
 
   def encode_device_id_into_token
     receive(:encode)
-      .with(user_id: user.id, iss: jwt_issuer)
+      .with(account_id: account.id, iss: jwt_issuer)
       .and_return(access_token)
   end
 end

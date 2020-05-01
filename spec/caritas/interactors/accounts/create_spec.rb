@@ -2,13 +2,11 @@
 
 require 'spec_helper'
 
-RSpec.describe Interactors::Users::Create, type: :interactor do
-  let(:user_attributes) do
+RSpec.describe Interactors::Accounts::Create, type: :interactor do
+  let(:account_attributes) do
     {
       email: 'penelope@cruz.com',
       password: 'superSecretPassword',
-      first_name: 'Penelope',
-      last_name: 'Cruz'
     }
   end
 
@@ -21,48 +19,48 @@ RSpec.describe Interactors::Users::Create, type: :interactor do
       described_class.new(dependencies)
     end
 
-    let(:user_repository) { instance_double(UserRepository) }
-    let(:password_service) { class_double(Services::Password) }
+    let(:account_repository) { double('AccountRepository') }
+    let(:password_service) { double('Services::Password') }
     let(:dependencies) do
       {
-        repository: user_repository,
+        repository: account_repository,
         password_service: password_service
       }
     end
-    let(:user) { instance_double(User) }
+    let(:account) { double('Account') }
     let(:hashed_password) { 'encrypted_password' }
-    let(:result) { interactor.call(user_attributes) }
+    let(:result) { interactor.call(account_attributes) }
 
     before do
       allow(password_service).to encrypt_password
-      allow(user_repository).to create_user
+      allow(account_repository).to create_account
     end
 
     it 'calls' do
-      interactor.call(user_attributes)
+      interactor.call(account_attributes)
     end
 
     it 'encrypts the given password' do
       expect(password_service).to encrypt_password
 
-      interactor.call(user_attributes)
+      interactor.call(account_attributes)
     end
 
-    it 'saves the user' do
-      expect(user_repository).to create_user
+    it 'saves the account' do
+      expect(account_repository).to create_account
 
-      interactor.call(user_attributes)
+      interactor.call(account_attributes)
     end
 
     it 'exposes the retrieved institutions' do
-      expect(result.user).to equal(user)
+      expect(result.account).to equal(account)
     end
 
-    describe 'given there is an user with the given email' do
+    describe 'given there is an account with the given email' do
       let(:error) { Hanami::Model::UniqueConstraintViolationError }
 
       before do
-        allow(user_repository).to receive(:create).and_raise(error)
+        allow(account_repository).to receive(:create).and_raise(error)
       end
 
       it 'fails' do
@@ -71,15 +69,15 @@ RSpec.describe Interactors::Users::Create, type: :interactor do
 
       it 'adds the error message to the interactor errors' do
         expect(result.errors)
-          .to eq([Interactors::Errors.user_email_already_exists])
+          .to eq([Interactors::Errors.account_email_already_exists])
       end
     end
 
-    describe 'given there is an error while creating the user' do
+    describe 'given there is an error while creating the account' do
       let(:db_error) { StandardError.new('db_error') }
 
       before do
-        allow(user_repository).to receive(:create).and_raise(db_error)
+        allow(account_repository).to receive(:create).and_raise(db_error)
       end
 
       it 'fails' do
@@ -96,18 +94,16 @@ RSpec.describe Interactors::Users::Create, type: :interactor do
 
   def encrypt_password
     receive(:encrypt)
-      .with(user_attributes[:password])
+      .with(account_attributes[:password])
       .and_return(hashed_password)
   end
 
-  def create_user
+  def create_account
     receive(:create)
       .with(
-        email: user_attributes[:email],
+        email: account_attributes[:email],
         password_digest: hashed_password,
-        first_name: user_attributes[:first_name],
-        last_name: user_attributes[:last_name]
       )
-      .and_return(user)
+      .and_return(account)
   end
 end

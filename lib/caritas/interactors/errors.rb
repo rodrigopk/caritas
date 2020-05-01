@@ -3,8 +3,8 @@
 module Interactors
   class Errors
     class << self
-      def user_email_already_exists
-        :user_email_already_exists
+      def account_email_already_exists
+        :account_email_already_exists
       end
 
       def invalid_credentials

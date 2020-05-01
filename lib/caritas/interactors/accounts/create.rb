@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 module Interactors
-  module Users
+  module Accounts
     class Create < Interactor
 
-      expose :user
+      expose :account
 
       def initialize(dependencies = {})
-        @user_repository = dependencies.fetch(:repository) do
-          Containers::Users[:repository]
+        @account_repository = dependencies.fetch(:repository) do
+          Containers::Accounts[:repository]
         end
 
         @password_service = dependencies.fetch(:password_service) do
@@ -16,22 +16,20 @@ module Interactors
         end
       end
 
-      def call(user_attributes)
-        @user = create_user(user_attributes)
+      def call(account_attributes)
+        @account = create_account(account_attributes)
       rescue Hanami::Model::UniqueConstraintViolationError
-        error!(Errors.user_email_already_exists)
+        error!(Errors.account_email_already_exists)
       rescue StandardError => e
         error!(e.message)
       end
 
       private
 
-      def create_user(user_attributes)
-        @user_repository.create(
-          email: user_attributes[:email],
-          password_digest: hashed_password(user_attributes[:password]),
-          first_name: user_attributes[:first_name],
-          last_name: user_attributes[:last_name]
+      def create_account(account_attributes)
+        @account_repository.create(
+          email: account_attributes[:email],
+          password_digest: hashed_password(account_attributes[:password]),
         )
       end
 

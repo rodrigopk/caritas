@@ -2,15 +2,9 @@
 
 require 'spec_helper'
 
-RSpec.describe Interactors::Users::Signup, type: :interactor do
-  let(:user_attributes) do
-    {
-      email: 'penelope@cruz.com',
-      password: 'superSecretPassword',
-      first_name: 'Penelope',
-      last_name: 'Cruz'
-    }
-  end
+RSpec.describe Interactors::Accounts::Signin, type: :interactor do
+  let(:email) { 'penelope@cruz.com' }
+  let(:password) { 'superSecretPassword' }
 
   it 'initializes without dependencies' do
     described_class.new
@@ -21,58 +15,54 @@ RSpec.describe Interactors::Users::Signup, type: :interactor do
       described_class.new(dependencies)
     end
 
-    let(:create_user_interactor) { double('CreateUserInteractor') }
+    let(:authenticate_interactor) { double('AuthtenticateInteractor') }
     let(:access_token_interactor) do
       double('GenerateAccessTokenInteractor')
     end
     let(:dependencies) do
       {
-        create_user_interactor: create_user_interactor,
+        authenticate_interactor: authenticate_interactor,
         access_token_interactor: access_token_interactor,
       }
     end
-    let(:user) { instance_double(User) }
+    let(:account) { double('Account') }
     let(:access_token) { 'access_token' }
-    let(:create_user_result) do
-      double('Interactor::Result', success?: true, user: user)
+    let(:authenticate_result) do
+      double('Interactor::Result', success?: true, account: account)
     end
     let(:generate_access_token_result) do
       double('Interactor::Result', success?: true, access_token: access_token)
     end
 
-    subject(:result) { interactor.call(user_attributes) }
+    subject(:result) { interactor.call(email: email, password: password) }
 
     before do
-      allow(create_user_interactor).to create_user
+      allow(authenticate_interactor).to authenticate
       allow(access_token_interactor).to generate_token
     end
 
-    it 'calls' do
-      interactor.call(user_attributes)
-    end
+    it 'authenticates the account' do
+      expect(authenticate_interactor).to authenticate
 
-    it 'creates an user' do
-      expect(create_user_interactor).to create_user
-
-      interactor.call(user_attributes)
+      interactor.call(email: email, password: password)
     end
 
     it 'generates access token' do
       expect(access_token_interactor).to generate_token
 
-      interactor.call(user_attributes)
+      interactor.call(email: email, password: password)
     end
 
-    it 'exposes the retrieved institutions' do
-      expect(result.user).to equal(user)
+    it 'exposes the authenticated account' do
+      expect(result.account).to equal(account)
     end
 
     it 'exposes the access token' do
       expect(result.access_token).to equal(access_token)
     end
 
-    describe 'given there is an error while creating the user' do
-      let(:create_user_result) do
+    describe 'given there is an error while authenticating the account' do
+      let(:authenticate_result) do
         double(
           'Interactor::Result',
           success?: false,
@@ -110,15 +100,15 @@ RSpec.describe Interactors::Users::Signup, type: :interactor do
 
   private
 
-  def create_user
+  def authenticate
     receive(:call)
-      .with(user_attributes)
-      .and_return(create_user_result)
+      .with(email: email, password: password)
+      .and_return(authenticate_result)
   end
 
   def generate_token
     receive(:call)
-      .with(user: user)
+      .with(account: account)
       .and_return(generate_access_token_result)
   end
 end

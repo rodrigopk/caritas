@@ -1,19 +1,20 @@
 # frozen_string_literal: true
 
 module Interactors
-  module Users
+  module Accounts
     class Signin < Interactor
 
-      expose :user, :access_token
+      expose :account, :access_token
 
       def initialize(dependencies = {})
-        @authenticate_interactor = dependencies.fetch(:authenticate_interactor) do
-          Containers::Users[:authenticate_interactor]
-        end
+        @authenticate_interactor =
+          dependencies.fetch(:authenticate_interactor) do
+            Containers::Accounts[:authenticate_interactor]
+          end
 
         @access_token_interactor =
           dependencies.fetch(:access_token_interactor) do
-            Containers::Users[:generate_access_token_interactor]
+            Containers::Session[:generate_access_token_interactor]
           end
       end
 
@@ -27,14 +28,14 @@ module Interactors
         result = @authenticate_interactor.call(email: email, password: password)
 
         on_successful_interactor_result(result) do |result|
-          generate_access_token(result.user)
+          generate_access_token(result.account)
 
-          @user = result.user
+          @account = result.account
         end
       end
 
-      def generate_access_token(user)
-        result = @access_token_interactor.call(user: user)
+      def generate_access_token(account)
+        result = @access_token_interactor.call(account: account)
 
         on_successful_interactor_result(result) do |result|
           @access_token = result.access_token

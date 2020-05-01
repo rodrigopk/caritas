@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Interactors
-  module Users
+  module Session
     class GenerateAccessToken < Interactor
 
       expose :access_token
@@ -14,8 +14,10 @@ module Interactors
         end
       end
 
-      def call(user:)
-        @access_token = @jwt_service.encode(user_id: user.id, iss: JWT_ISSUER)
+      def call(account:)
+        @access_token = @jwt_service.encode(
+          account_id: account.id, iss: JWT_ISSUER
+        )
       end
     end
   end

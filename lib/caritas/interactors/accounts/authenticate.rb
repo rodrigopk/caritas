@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
+require_relative '../interactor'
+
 module Interactors
-  module Users
+  module Accounts
     class Authenticate < Interactor
 
-      expose :user
+      expose :account
 
       def initialize(dependencies = {})
-        @user_repository = dependencies.fetch(:repository) do
-          Containers::Users[:repository]
+        @account_repository = dependencies.fetch(:repository) do
+          Containers::Accounts[:repository]
         end
 
         @password_service = dependencies.fetch(:password_service) do
@@ -17,9 +19,9 @@ module Interactors
       end
 
       def call(email:, password:)
-        user = find_user_by_email(email)
-        if user
-          validate_credentials(user, password)
+        account = find_account_by_email(email)
+        if account
+          validate_credentials(account, password)
         else
           invalid_credentials
         end
@@ -27,23 +29,23 @@ module Interactors
 
       private
 
-      def find_user_by_email(email)
-        @user_repository.find_by_email(email)
+      def find_account_by_email(email)
+        @account_repository.find_by_email(email)
       rescue => e
         error!(e.message)
       end
 
-      def validate_credentials(user, password)
-        if password_match?(user, password)
-          @user = user
+      def validate_credentials(account, password)
+        if password_match?(account, password)
+          @account = account
         else
           invalid_credentials
         end
       end
 
-      def password_match?(user, password)
+      def password_match?(account, password)
         @password_service.matches_encryptes_password?(
-          password, user.password_digest
+          password, account.password_digest
         )
       end
 

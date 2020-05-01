@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Interactors::Users::Authenticate, type: :interactor do
+RSpec.describe Interactors::Accounts::Authenticate, type: :interactor do
   let(:email) { 'penelope@cruz.com' }
   let(:password) { 'superSecretPassword' }
 
@@ -15,25 +15,25 @@ RSpec.describe Interactors::Users::Authenticate, type: :interactor do
       described_class.new(dependencies)
     end
 
-    let(:user_repository) { instance_double(UserRepository) }
+    let(:account_repository) { double('AccountRepository') }
     let(:password_service) { class_double(Services::Password) }
     let(:dependencies) do
       {
-        repository: user_repository,
+        repository: account_repository,
         password_service: password_service
       }
     end
-    let(:user) { double('User', password_digest: 'encrypted_password') }
+    let(:account) { double('User', password_digest: 'encrypted_password') }
     subject(:result) { interactor.call(email: email, password: password) }
 
     describe 'successful path' do
       before do
-        allow(user_repository).to find_user.and_return(user)
+        allow(account_repository).to find_account.and_return(account)
         allow(password_service).to match_password.and_return(true)
       end
 
-      it 'finds the user for the given email' do
-        expect(user_repository).to find_user.and_return(user)
+      it 'finds the account for the given email' do
+        expect(account_repository).to find_account.and_return(account)
 
         interactor.call(email: email, password: password)
       end
@@ -44,10 +44,10 @@ RSpec.describe Interactors::Users::Authenticate, type: :interactor do
         interactor.call(email: email, password: password)
       end
 
-      it 'exposes the retrieved user' do
+      it 'exposes the retrieved account' do
         result = interactor.call(email: email, password: password)
 
-        expect(result.user).to eq(user)
+        expect(result.account).to eq(account)
       end
 
       describe 'given the password does not match the hash' do
@@ -68,9 +68,9 @@ RSpec.describe Interactors::Users::Authenticate, type: :interactor do
       end
     end
 
-    describe 'given there is no user for the given email' do
+    describe 'given there is no account for the given email' do
       before do
-        allow(user_repository).to find_user.and_return(nil)
+        allow(account_repository).to find_account.and_return(nil)
       end
 
       it 'fails' do
@@ -83,11 +83,11 @@ RSpec.describe Interactors::Users::Authenticate, type: :interactor do
       end
     end
 
-    describe 'given there is an error while finding the user' do
+    describe 'given there is an error while finding the account' do
       let(:db_error) { StandardError.new('db_error') }
 
       before do
-        allow(user_repository).to find_user.and_raise(db_error)
+        allow(account_repository).to find_account.and_raise(db_error)
       end
 
       it 'fails' do
@@ -102,12 +102,12 @@ RSpec.describe Interactors::Users::Authenticate, type: :interactor do
 
   private
 
-  def find_user
+  def find_account
     receive(:find_by_email).with(email)
   end
 
   def match_password
     receive(:matches_encryptes_password?)
-      .with(password, user.password_digest)
+      .with(password, account.password_digest)
   end
 end
