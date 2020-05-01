@@ -23,5 +23,9 @@ module Containers
     register :signin_interactor do
       Interactors::Users::Signin.new
     end
+
+    register :generate_access_token_interactor do
+      Interactors::Users::GenerateAccessToken.new
+    end
   end
 end
