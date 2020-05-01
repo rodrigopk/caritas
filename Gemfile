@@ -5,14 +5,20 @@ source 'https://rubygems.org'
 gem 'hanami', '~> 1.3'
 gem 'hanami-model', '~> 1.3'
 gem 'rake'
+gem 'puma'
 
 gem 'pg'
+
+gem 'bcrypt'
+gem 'jwt'
+gem 'warden'
 
 group :development do
   # Code reloading
   # See: https://guides.hanamirb.org/projects/code-reloading
   gem 'hanami-webconsole'
-  gem 'shotgun', platforms: :ruby
+  # gem 'shotgun', platforms: :ruby
+  gem 'guard-rspec', require: false
 end
 
 group :test, :development do
@@ -23,8 +29,6 @@ end
 group :test do
   gem 'capybara'
   gem 'rspec'
-end
-
-group :production do
-  # gem 'puma'
+  gem 'ffaker'
+  gem 'timecop'
 end
