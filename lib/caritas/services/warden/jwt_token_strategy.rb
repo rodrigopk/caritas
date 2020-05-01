@@ -15,9 +15,9 @@ module Services
 
       def authenticate!
         claims = decoded_token
-        device_id = claims.nil? ? nil : claims.fetch('device_id', nil)
-        if claims && device_id
-          success!(device_id)
+        user_id = claims.nil? ? nil : claims.fetch('user_id', nil)
+        if claims && user_id
+          success!(user_id)
         else
           fail!
         end

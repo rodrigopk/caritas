@@ -4,8 +4,8 @@ require 'spec_helper'
 
 describe Services::Warden::JwtTokenStrategy do
   let(:strategy) { described_class.new(nil) }
-  let(:device_id) { SecureRandom.uuid }
-  let(:jwt) { Services::Jwt.encode(device_id: device_id) }
+  let(:user_id) { SecureRandom.uuid }
+  let(:jwt) { Services::Jwt.encode(user_id: user_id) }
 
   before do
     allow(strategy).to receive(:env).and_return(env)
