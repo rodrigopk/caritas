@@ -8,6 +8,8 @@ require 'hanami/middleware/body_parser'
 require_relative '../lib/caritas'
 require_relative '../apps/api/application'
 
+FILTERED_PARAMS = %w[password access_token]
+
 Hanami.configure do
   mount Api::Application, at: '/api'
 
@@ -42,11 +44,11 @@ Hanami.configure do
 
   environment :development do
     # See: https://guides.hanamirb.org/projects/logging
-    logger level: :debug
+    logger level: :debug, filter: FILTERED_PARAMS
   end
 
   environment :production do
-    logger level: :info, formatter: :json, filter: []
+    logger level: :info, formatter: :json, filter: FILTERED_PARAMS
 
     mailer do
       delivery :smtp,

@@ -2,7 +2,6 @@
 
 require 'hanami/helpers'
 require 'hanami/assets'
-require_relative 'controllers/logger'
 require_relative 'controllers/mixins/authentication/user'
 
 module Api
@@ -78,7 +77,6 @@ module Api
       )
 
       controller.prepare do
-        include Api::Controllers::Logger
         include Api::Controllers::Mixins::Authentication::User
       end
 
