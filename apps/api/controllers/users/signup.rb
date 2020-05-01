@@ -5,6 +5,7 @@ module Api
     module Users
       class Signup
         include Api::Action
+        include Mixins::Authentication::Skip
 
         expose :user
 

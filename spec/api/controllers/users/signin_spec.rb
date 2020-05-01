@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Api::Controllers::Users::Signin, type: :action do
+RSpec.describe Api::Controllers::Users::Signin, type: :unauthenticated_action do
   let(:action) { described_class.new(interactor: interactor) }
   let(:interactor) { double('Interactor') }
   subject(:response) { action.call(params) }
